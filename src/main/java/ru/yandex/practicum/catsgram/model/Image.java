@@ -1,8 +1,10 @@
 package ru.yandex.practicum.catsgram.model;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import java.time.Instant;
 import java.util.Objects;
 
+@Data
 @EqualsAndHashCode(of ={"id"})
 public class Image {
     private Long id;
