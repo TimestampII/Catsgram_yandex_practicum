@@ -20,12 +20,8 @@ public class PostService {
     private final UserService userService;
     private final Map<Long, Post> posts = new HashMap<>();
 
-    public Collection<Post> findAll(int from, int size, String sort) {
-        // Преобразуем строку сортировки в enum
-        SortOrder sortOrder = SortOrder.from(sort);
-
+    public Collection<Post> findAll(int from, int size, SortOrder sortOrder) {
         return posts.values().stream()
-                // Сортируем по дате создания
                 .sorted((p1, p2) -> {
                     if (sortOrder == SortOrder.ASCENDING) {
                         return p1.getPostDate().compareTo(p2.getPostDate());
@@ -33,9 +29,7 @@ public class PostService {
                         return p2.getPostDate().compareTo(p1.getPostDate());
                     }
                 })
-                // Пропускаем первые 'from' постов
                 .skip(from)
-                // Берем 'size' постов
                 .limit(size)
                 .collect(Collectors.toList());
     }
@@ -50,7 +44,6 @@ public class PostService {
         post.setId(getNextId());
         post.setPostDate(Instant.now());
         posts.put(post.getId(), post);
-
         return post;
     }
 
@@ -85,7 +78,6 @@ public class PostService {
     public enum SortOrder {
         ASCENDING, DESCENDING;
 
-        // Преобразует строку в элемент перечисления
         public static SortOrder from(String order) {
             switch (order.toLowerCase()) {
                 case "ascending":
@@ -99,5 +91,4 @@ public class PostService {
             }
         }
     }
-
 }

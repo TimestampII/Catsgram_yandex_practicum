@@ -11,20 +11,20 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping
-    public Collection<User> findAll(){
-      return userService.findAll();
+    public Collection<User> findAll() {
+        return userService.findAll();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public User create(@RequestBody User user){
+    public User create(@RequestBody User user) {
         return userService.create(user);
     }
 
